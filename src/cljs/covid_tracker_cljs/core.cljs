@@ -4,8 +4,7 @@
    [re-frame.core :as re-frame]
    [covid-tracker-cljs.events :as events]
    [covid-tracker-cljs.views :as views]
-   [covid-tracker-cljs.config :as config]
-   ))
+   [covid-tracker-cljs.config :as config]))
 
 
 (defn dev-setup []

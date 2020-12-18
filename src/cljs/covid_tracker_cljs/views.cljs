@@ -2,8 +2,7 @@
   (:require
    [re-frame.core :as re-frame]
    [re-com.core :as re-com]
-   [covid-tracker-cljs.subs :as subs]
-   ))
+   [covid-tracker-cljs.subs :as subs]))
 
 (defn title []
   (let [name (re-frame/subscribe [::subs/name])]
