@@ -7,9 +7,8 @@
 (def province-keywords [::subs/Uusimaa ::subs/Pohjois-Karjala ::subs/Uusimaa1
                         ::subs/Uusimaa2 ::subs/Uusimaa3 ::subs/Uusimaa4 ::subs/Uusimaa5])
 
-(defn province [province-keyword]
-  (let [prov @(subscribe [province-keyword])
-        province-name (:province prov)
+(defn province [prov]
+  (let [province-name (:province prov)
         municipalities (:municipalities prov)]
     [:div
      {:style {:padding 10}}
@@ -22,4 +21,5 @@
   [:div
    {:style {:margin "auto" :width "50vw" :height "100vh"}}
    [:div {:style {:display "flex" :flex-wrap "wrap"}}
-    (map province province-keywords)]])
+    (let [provinces @(subscribe [::subs/provinces])]
+      (map province provinces))]])
