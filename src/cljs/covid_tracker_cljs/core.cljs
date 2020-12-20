@@ -18,6 +18,6 @@
     (rdom/render [views/default-panel] root-el)))
 
 (defn init []
-  (re-frame/dispatch-sync [::events/initialize-db])
+  (re-frame/dispatch-sync [::events/init-db])
   (dev-setup)
   (mount-root))
