@@ -17,7 +17,7 @@
       (for [m municipalities]
         [:li m])]]))
 
-(defn default-panel []
+(defn main-panel []
   [:div
    {:style {:margin "auto" :width "50vw" :height "100vh"}}
    [:div {:style {:display "flex" :flex-wrap "wrap"}}
