@@ -4,6 +4,6 @@
    [covid-tracker-cljs.db :as db]))
 
 (re-frame/reg-event-db
- ::initialize-db
+ ::init-db
  (fn [_ _]
-   db/default-db))
+   db/app-db))

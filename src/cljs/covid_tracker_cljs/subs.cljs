@@ -1,8 +1,9 @@
 (ns covid-tracker-cljs.subs
   (:require
-   [re-frame.core :as re-frame]))
+   [re-frame.core :refer [reg-sub]]))
 
-(re-frame/reg-sub
- ::name
+(reg-sub
+ ::provinces
  (fn [db]
-   (:name db)))
+   (:provinces db)))
+

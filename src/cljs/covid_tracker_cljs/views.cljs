@@ -1,16 +1,21 @@
 (ns covid-tracker-cljs.views
   (:require
-   [re-frame.core :as re-frame]
-   [re-com.core :as re-com]
-   [covid-tracker-cljs.subs :as subs]))
+   [covid-tracker-cljs.subs :as subs]
+   [re-frame.core :refer [subscribe]]))
 
-(defn title []
-  (let [name (re-frame/subscribe [::subs/name])]
-    [re-com/title
-     :label (str "Hello from " @name)
-     :level :level1]))
+(defn province [prov]
+  (let [province-name (:province prov)
+        municipalities (:municipalities prov)]
+    [:div
+     {:style {:padding 10}}
+     [:h3 province-name]
+     [:ul
+      (for [m municipalities]
+        [:li m])]]))
 
 (defn main-panel []
-  [re-com/v-box
-   :height "100%"
-   :children [[title]]])
+  [:div
+   {:style {:margin "auto" :width "50vw" :height "100vh"}}
+   [:div {:style {:display "flex" :flex-wrap "wrap"}}
+    (let [provinces @(subscribe [::subs/provinces])]
+      (map province provinces))]])
