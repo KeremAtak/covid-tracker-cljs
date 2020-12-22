@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/clojure:lein-2.7.1
+      - image: circleci/clojure:lein-node-browsers
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -28,15 +28,18 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "project.clj" }}
+            - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-
-      - run: lein deps
 
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "project.clj" }}
 
+      - run: lein deps
+      - run: npm install
+      - run: sudo npm install karma-cli -g
+
       # run tests!
-      - run: lein test
+      - run: lein ci

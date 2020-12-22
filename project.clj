@@ -32,8 +32,7 @@
                                                :preloads [devtools.preload]}}
 
                                :devtools {:http-root "resources/public"
-                                          :http-port 8280
-                                          }}
+                                          :http-port 8280}}
                          :browser-test
                          {:target :browser-test
                           :ns-regexp "-test$"
@@ -73,7 +72,7 @@
             "karma"        ["do"
                             ["shell" "echo" "\"DEPRECATED: Please use lein ci instead.\""]
                             ["ci"]]
-            "ci"           ["with-profile" "prod" "do"
+            "ci"           ["with-profile" "test" "do"
                             ["shadow" "compile" "karma-test"]
                             ["shell" "karma" "start" "--single-run" "--reporters" "junit,dots"]]}
 
