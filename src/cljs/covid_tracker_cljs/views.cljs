@@ -28,9 +28,14 @@
       (for [m municipalities]
         [:li m])]]))
 
-(defn main-panel []
+(defn infographics []
   [:div
-   {:style {:margin "auto" :width "50vw" :height "100vh"}}
+   {:style {:margin "auto" :width "20vw" :height "100vh"}}
    [:div {:style {:display "flex" :flex-wrap "wrap"}}
     (let [provinces @(subscribe [::subs/provinces])]
       (map province provinces))]])
+
+(defn header []
+  [:header
+   {:style {:margin "auto" :width "50%" :height "10vh"}}
+   [:h2 "Covid-tracker-cljs"]])
