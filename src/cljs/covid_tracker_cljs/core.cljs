@@ -1,11 +1,10 @@
 (ns covid-tracker-cljs.core
-  (:require
-   [reagent.dom :as rdom]
-   [re-frame.core :as re-frame]
-   [covid-tracker-cljs.events :as events]
-   [covid-tracker-cljs.views :as views]
-   [covid-tracker-cljs.config :as config]))
-
+  (:require [covid-tracker-cljs.config :as config]
+            [covid-tracker-cljs.events :as events]
+            [covid-tracker-cljs.views :as views]
+            [reagent.dom :as rdom]
+            [re-frame.core :as re-frame]
+            [threeagent.core :as th]))
 
 (defn dev-setup []
   (when config/debug?
@@ -13,11 +12,14 @@
 
 (defn ^:dev/after-load mount-root []
   (re-frame/clear-subscription-cache!)
-  (let [root-el (.getElementById js/document "app")]
-    (rdom/unmount-component-at-node root-el)
-    (rdom/render [views/main-panel] root-el)))
+  (let [app-el (.getElementById js/document "app")
+        root-el (.getElementById js/document "root")]
+    (rdom/unmount-component-at-node app-el)
+    (rdom/render [views/main-panel] app-el)
+    (th/render [views/root] root-el)))
 
 (defn init []
   (re-frame/dispatch-sync [::events/init-db])
+  (js/setInterval (fn [] (re-frame/dispatch-sync [::events/cube-degree])) 10)
   (dev-setup)
   (mount-root))
