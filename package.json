@@ -1,6 +1,7 @@
 {
 	"name": "covid-tracker-cljs",
 	"dependencies": {
+		"p5": "^1.2.0",
 		"react": "16.13.0",
 		"react-dom": "16.13.0",
 		"three": "^0.123.0"
