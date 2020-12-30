@@ -12,7 +12,7 @@ Have lein and npm installed. Then run `lein install` and `npm install` to instal
 
 Start the application with `lein watch`. The application will start at http://localhost:8280/.
 
-For tests install karma-cli globally with `npm install -g karma-cli`. After that run the tests with `lein ci`. You should be able to see the results in the terminal.
+For tests install karma-cli globally with `npm install -g karma-cli`. After that run the tests with `lein ci`. You should be able to see the results in the terminal. Alternatively run `karma start` when the client is running.
 
 # Links
 

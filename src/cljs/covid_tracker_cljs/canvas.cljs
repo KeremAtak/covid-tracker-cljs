@@ -3,6 +3,58 @@
             [quil.middleware :as m]))
 
 (def pohjois-karjala-points [[20 60] [40 50] [50 30] [40 10] [10 0] [15 30] [0 50]])
+(def pohjois-karjala-position [20 60])
+(def cube-points [[20 20] [20 40] [40 40] [40 20]])
+(def cube-position [100 200])
+
+(defn point->extrema
+  "Calculates whether value is more extreme than the other. Highest?-boolean determines
+   if we're looking for minimal or maximal value."
+  [{:keys [extrema maximal? point]}]
+  (cond
+    (and maximal? (< extrema point)) point
+    (and (not maximal?) (< point extrema)) point
+    :else extrema))
+
+(defn points->extremum
+  "Calculates the maxima values recursively"
+  [{:keys [maxima-x maxima-y
+           minima-x minima-y
+           points]}]
+  (if (empty? points)
+    {:maxima-x maxima-x :maxima-y maxima-y
+     :minima-x minima-x :minima-y minima-y}
+    (let [[x y] (first points)
+          new-maxima-x (point->extrema {:extrema maxima-x
+                                        :maximal? true
+                                        :point x})
+          new-maxima-y (point->extrema {:extrema maxima-y
+                                        :maximal? true
+                                        :point y})
+          new-minima-x (point->extrema {:extrema minima-x
+                                        :maximal? false
+                                        :point x})
+          new-minima-y (point->extrema {:extrema minima-y
+                                        :maximal? false
+                                        :point y})
+          rest-points (rest points)]
+      (points->extremum {:maxima-x new-maxima-x :maxima-y new-maxima-y
+                         :minima-x new-minima-x :minima-y new-minima-y
+                         :points rest-points}))))
+
+
+(defn position-and-points->boundaries [{:keys [position points]}]
+  (let [extremum (points->extremum {:maxima-x 0 :maxima-y 0
+                                    :minima-x 10000 :minima-y 10000
+                                    :points points})
+        maxima-x (:maxima-x extremum)
+        maxima-y (:maxima-y extremum)
+        minima-x (:minima-x extremum)
+        minima-y (:minima-y extremum)
+        x (first position)
+        y (second position)]
+        [{:x (+ x minima-x) :y (+ y minima-y)}
+         {:x (+ x maxima-x) :y (+ y maxima-y)}]))
 
 (defn form-shape [{:keys [background-color color points scale-kwd state]}]
   (q/background (or (:background-color state) background-color))
@@ -25,40 +77,42 @@
     (q/with-graphics gg
       (form-shape {:background-color 0
                    :color [255 0 0]
-                   :points [[20 20] [20 40] [40 40] [40 20]]
+                   :points cube-points
                    :scale-kwd :nothing
                    :state state}))
     (q/set-state! :pohjois-karjala gr
                   :cube gg
                   :background-color 50
+                  :cube-position cube-position
+                  :pohjois-karjala-position pohjois-karjala-position
                   :pohjois-karjala-scale 1
-                  :pohjois-karjala-boundaries [{:x 0 :y 0} {:x 40 :y 60}])))
+                  :pohjois-karjala-boundaries (position-and-points->boundaries 
+                                               {:points pohjois-karjala-points
+                                                :position pohjois-karjala-position}))))
 
 (defn update-bg [state]
   (update-in state [:background-color] #(+ % 5)))
 
 (defn check-mouse! [state]
-  (let [coords (:pohjois-karjala-boundaries state)]
-    (println (:x (first coords)))
-    (println (:x (second coords)))
-    (println (:y (first coords)))
-    (println (:y (second coords)))
-    (println (q/mouse-x))
-    (println (q/mouse-y))
-    (if (and (< (:x (first coords)) (q/mouse-x) (:x (second coords)))
-             (< (:y (first coords)) (q/mouse-y) (:y (second coords))))
-      (update-in state [:background-color] #(+ % 5)))))
+  (let [[minima maxima] (:pohjois-karjala-boundaries state)]
+    (if (and (< (:x minima) (q/mouse-x) (:x maxima))
+             (< (:y minima) (q/mouse-y) (:y maxima)))
+      (update-in state [:background-color] #(+ % 5))
+      (update-in state [:background-color] #(+ % 0)))))
 
 (defn draw [state]
   (q/background (:background-color state))
   (if (or (nil? (:pohjois-karjala state))
           (nil? (:cube state)))
     (do
-      (q/text "Loading" 10 10)
-      (println (:pohjois-karjala state)))
+      (q/text "Loading" 10 10))
     (do
-      (q/image (:pohjois-karjala state) 0 0)
-      (q/image (:cube state) 100 200))))
+      (q/image (:pohjois-karjala state)
+               (first (:pohjois-karjala-position state))
+               (second (:pohjois-karjala-position state)))
+      (q/image (:cube state)
+               (first (:cube-position state))
+               (second (:cube-position state))))))
 
 (q/defsketch covid-canvas
   :setup setup
