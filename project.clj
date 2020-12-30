@@ -4,12 +4,11 @@
                   :exclusions [com.google.javascript/closure-compiler-unshaded
                                org.clojure/google-closure-library
                                org.clojure/google-closure-library-third-party]]
-                 [doughamil/threeagent "0.0.6"]
-                 [hiccup-find  "1.0.0"]
+                 [hiccup-find "1.0.0"]
                  [quil "3.0.0"]
                  [reagent "0.10.0"]
-                 [re-frame "1.1.2"]
                  [re-com "2.9.0"]
+                 [re-frame "1.1.2"]
                  [thheller/shadow-cljs "2.11.7"]]
 
   :plugins [[lein-shadow "0.3.1"]

@@ -3,8 +3,7 @@
             [covid-tracker-cljs.events :as events]
             [covid-tracker-cljs.views :as views]
             [reagent.dom :as rdom]
-            [re-frame.core :as re-frame]
-            [threeagent.core :as th]))
+            [re-frame.core :as re-frame]))
 
 (defn dev-setup []
   (when config/debug?

@@ -15,7 +15,6 @@
     (q/vertex x y))
   (q/end-shape))
 
-
 (defn setup [state]
   (let [gr (q/create-graphics 50 60)
         gg (q/create-graphics 150 150)]
@@ -25,7 +24,6 @@
                    :points pohjois-karjala-points
                    :scale-kwd :pohjois-karjala-scale
                    :state state}))
-
     (q/with-graphics gg
       (form-shape {:background-color 0
                    :color [255 0 0]

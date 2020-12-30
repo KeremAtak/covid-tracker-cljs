@@ -2,7 +2,7 @@
 
 This application will eventually visualize covid-related data. Currently it doesn't do much and the data is hardcoded, but it eventually should look impressive and present real data from THL.
 
-Some rudimentary Three.js graphics have been implemented.
+Some rudimentary Quil graphics have been implemented.
 
 This application is written with ClojureScript and it's library re-frame.
 
