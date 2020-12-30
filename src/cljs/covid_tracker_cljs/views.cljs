@@ -4,31 +4,34 @@
             [quil.middleware :as m]
             [re-frame.core :refer [subscribe]]))
 
+(def pohjois-karjala-points [[20 60] [40 50] [50 30] [40 10] [10 0] [15 30] [0 50]])
+
+(defn form-shape [{:keys [background-color color points scale-kwd state]}]
+  (q/background (or (:background-color state) background-color))
+  (q/begin-shape)
+  (q/scale (or (scale-kwd state) 1))
+  (q/fill (first color) (second color) (last color))
+  (doseq [[x y] points]
+    (q/vertex x y))
+  (q/end-shape))
+
+
 (defn setup [state]
   (let [gr (q/create-graphics 50 60)
         gg (q/create-graphics 150 150)]
     (q/with-graphics gr
-      (q/background (or (:background-color state) 50))
-      (q/begin-shape)
-      (q/scale (or (:pohjois-karjala-scale state) 1))
-      (q/fill 0 255 0)
-      (q/vertex 20 60)
-      (q/vertex 40 50)
-      (q/vertex 50 30)
-      (q/vertex 40 10)
-      (q/vertex 10 0)
-      (q/vertex 15 30)
-      (q/vertex 0 50)
-      (q/end-shape))
+      (form-shape {:background-color 50
+                   :color [0 255 0]
+                   :points pohjois-karjala-points
+                   :scale-kwd :pohjois-karjala-scale
+                   :state state}))
+
     (q/with-graphics gg
-      (q/background (or (:background-color state) 50))
-      (q/begin-shape)
-      (q/fill 255 0 0)
-      (q/vertex 20 20)
-      (q/vertex 20 40)
-      (q/vertex 40 40)
-      (q/vertex 40 20)
-      (q/end-shape))
+      (form-shape {:background-color 0
+                   :color [255 0 0]
+                   :points [[20 20] [20 40] [40 40] [40 20]]
+                   :scale-kwd :nothing
+                   :state state}))
     (q/set-state! :pohjois-karjala gr
                   :cube gg
                   :background-color 50
