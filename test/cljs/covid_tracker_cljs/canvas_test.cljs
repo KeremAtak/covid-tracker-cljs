@@ -2,7 +2,7 @@
   (:require [cljs.test :refer-macros [deftest testing is]]
             [covid-tracker-cljs.canvas :refer [point->extrema points->extremum]]))
 
-(deftest canvas-test
+#_(deftest canvas-test
   (testing "point->extrema"
     (is (= 50 (point->extrema {:extrema 60
                                :maximal? false
