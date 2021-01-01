@@ -1,6 +1,9 @@
 (ns covid-tracker-cljs.canvas
-  (:require [quil.core :as q :include-macros true]
-            [quil.middleware :as m]))
+  (:require [covid-tracker-cljs.events :as events]
+            [covid-tracker-cljs.subs :as subs]
+            [quil.core :as q :include-macros true]
+            [quil.middleware :as m]
+            [re-frame.core :refer [dispatch subscribe]]))
 
 (def pohjois-karjala-points [[20 60] [40 50] [50 30] [40 10] [10 0] [15 30] [0 50]])
 (def pohjois-karjala-position [20 60])
@@ -42,7 +45,6 @@
                          :minima-x new-minima-x :minima-y new-minima-y
                          :points rest-points}))))
 
-
 (defn position-and-points->boundaries [{:keys [position points]}]
   (let [extremum (points->extremum {:maxima-x 0 :maxima-y 0
                                     :minima-x 10000 :minima-y 10000
@@ -56,8 +58,8 @@
         [{:x (+ x minima-x) :y (+ y minima-y)}
          {:x (+ x maxima-x) :y (+ y maxima-y)}]))
 
-(defn form-shape [{:keys [background-color color points scale-kwd state]}]
-  (q/background (or (:background-color state) background-color))
+(defn form-shape [{:keys [color points scale-kwd state]}]
+  (q/background @(subscribe [::subs/background-color]))
   (q/begin-shape)
   (q/scale (or (scale-kwd state) 1))
   (q/fill (first color) (second color) (last color))
@@ -66,23 +68,21 @@
   (q/end-shape))
 
 (defn setup [state]
+  ;; Maybe calculate boundaries in this let..
   (let [gr (q/create-graphics 50 60)
         gg (q/create-graphics 150 150)]
     (q/with-graphics gr
-      (form-shape {:background-color 50
-                   :color [0 255 0]
+      (form-shape {:color [0 255 0]
                    :points pohjois-karjala-points
                    :scale-kwd :pohjois-karjala-scale
                    :state state}))
     (q/with-graphics gg
-      (form-shape {:background-color 0
-                   :color [255 0 0]
+      (form-shape {:color [255 0 0]
                    :points cube-points
                    :scale-kwd :nothing
                    :state state}))
     (q/set-state! :pohjois-karjala gr
                   :cube gg
-                  :background-color 50
                   :cube-position cube-position
                   :pohjois-karjala-position pohjois-karjala-position
                   :pohjois-karjala-scale 1
@@ -91,17 +91,19 @@
                                                 :position pohjois-karjala-position}))))
 
 (defn update-bg [state]
-  (update-in state [:background-color] #(+ % 5)))
+  (let [background-color @(subscribe [::subs/background-color])]
+    (dispatch [::events/change-background (- background-color 5)])
+    state))
 
 (defn check-mouse! [state]
   (let [[minima maxima] (:pohjois-karjala-boundaries state)]
     (if (and (< (:x minima) (q/mouse-x) (:x maxima))
              (< (:y minima) (q/mouse-y) (:y maxima)))
-      (update-in state [:background-color] #(+ % 5))
-      (update-in state [:background-color] #(+ % 0)))))
+      (update-bg state)
+      state)))
 
 (defn draw [state]
-  (q/background (:background-color state))
+  (q/background @(subscribe [::subs/background-color]))
   (if (or (nil? (:pohjois-karjala state))
           (nil? (:cube state)))
     (do

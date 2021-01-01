@@ -7,6 +7,6 @@
    (:provinces db)))
 
 (reg-sub
- ::cube-degree
+ ::background-color
  (fn [db]
-   (:cube-degree db)))
+   (:background-color db)))

@@ -1,7 +1,8 @@
 (ns covid-tracker-cljs.db)
 
 (def app-db
-  {:provinces
+  {:background-color 50
+   :provinces
    [{:province "Uusimaa" :municipalities ["Helsinki" "Espoo" "Vantaa" "Lohja"]}
     {:province "Pohjois-Karjala" :municipalities ["Joensuu" "Liperi" "Rääkkylä" "Nurmes"
                                                   "Lieksa" "Outokumpu" "Polvijärvi" "Kitee"

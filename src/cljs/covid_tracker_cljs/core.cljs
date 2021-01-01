@@ -17,6 +17,5 @@
 
 (defn init []
   (re-frame/dispatch-sync [::events/init-db])
-  (js/setInterval (fn [] (re-frame/dispatch-sync [::events/cube-degree])) 10)
   (dev-setup)
   (mount-root))
