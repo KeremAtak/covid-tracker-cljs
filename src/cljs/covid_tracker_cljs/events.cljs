@@ -1,7 +1,6 @@
 (ns covid-tracker-cljs.events
   (:require [covid-tracker-cljs.db :as db]
-            [covid-tracker-cljs.subs :as subs]
-            [re-frame.core :refer [inject-cofx reg-cofx reg-event-db reg-event-fx subscribe]]))
+            [re-frame.core :refer [reg-event-db]]))
 
 (reg-event-db
  ::change-background

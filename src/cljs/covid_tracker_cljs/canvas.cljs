@@ -5,7 +5,7 @@
             [quil.middleware :as m]
             [re-frame.core :refer [dispatch subscribe]]))
 
-(defn form-shape! [{:keys [color graphics shape state]}]
+(defn form-shape! [{:keys [color graphics shape]}]
   (q/with-graphics graphics
     (q/background @(subscribe [::subs/background-color]))
     (q/begin-shape)
@@ -23,13 +23,11 @@
         cu (q/create-graphics 120 140)
         shapes @(subscribe [::subs/shapes])]
     (form-shape! {:color [0 255 0]
-                 :graphics pk
-                 :shape (:pohjois-karjala shapes)
-                 :state state})
+                  :graphics pk
+                  :shape (:pohjois-karjala shapes)})
     (form-shape! {:color [255 0 0]
-                 :graphics cu
-                 :shape (:cube shapes)
-                 :state state})
+                  :graphics cu
+                  :shape (:cube shapes)})
     (q/set-state! :pohjois-karjala pk
                   :cube cu)))
 
