@@ -2,11 +2,16 @@
   (:require [re-frame.core :refer [reg-sub]]))
 
 (reg-sub
+ ::background-color
+ (fn [db]
+   (:background-color db)))
+
+(reg-sub
  ::provinces
  (fn [db]
    (:provinces db)))
 
 (reg-sub
- ::cube-degree
+ ::shapes
  (fn [db]
-   (:cube-degree db)))
+   (:shapes db)))
