@@ -1,5 +1,5 @@
 (ns covid-tracker-cljs.canvas-test
-  (:require [cljs.test :refer-macros [deftest testing is]]
+  #_(:require [cljs.test :refer-macros [deftest testing is]]
             [covid-tracker-cljs.canvas :refer [point->extrema points->extremum]]))
 
 #_(deftest canvas-test

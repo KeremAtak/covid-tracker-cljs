@@ -64,7 +64,8 @@
     (q/begin-shape)
     ;; delete scale here?
     (q/scale 1)
-    (q/fill (first color) (second color) (last color))
+    (let [[r g b] color]
+      (q/fill r g b))
     (doseq [[x y] (:points shape)]
       (q/vertex x y))
     (q/end-shape)))
@@ -91,8 +92,6 @@
     state))
 
 (defn check-mouse! [state]
-  (println (q/mouse-x))
-  (println (q/mouse-y))
   (let [shapes @(subscribe [::subs/shapes])
         [minima maxima] (-> shapes :pohjois-karjala :boundaries)]
     (if (and (< (:x minima) (q/mouse-x) (:x maxima))
@@ -104,17 +103,17 @@
   (let [background-color @(subscribe [::subs/background-color])
         shapes @(subscribe [::subs/shapes])]
     (q/background background-color)
-  (if (or (nil? (:pohjois-karjala state))
-          (nil? (:cube state)))
-    (do
-      (q/text "Loading" 10 10))
-    (do
-      (q/image (:pohjois-karjala state)
-               (-> shapes :pohjois-karjala :position first)
-               (-> shapes :pohjois-karjala :position second))
-      (q/image (:cube state)
-               (-> shapes :cube :position first)
-               (-> shapes :cube :position second))))))
+    (if (or (nil? (:pohjois-karjala state))
+            (nil? (:cube state)))
+      (do
+        (q/text "Loading" 10 10))
+      (do
+        (q/image (:pohjois-karjala state)
+                 (-> shapes :pohjois-karjala :position first)
+                 (-> shapes :pohjois-karjala :position second))
+        (q/image (:cube state)
+                 (-> shapes :cube :position first)
+                 (-> shapes :cube :position second))))))
 
 (q/defsketch covid-canvas
   :setup setup
