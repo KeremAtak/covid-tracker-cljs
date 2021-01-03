@@ -23,7 +23,7 @@
 (defn header []
   [:header
    {:style {:margin "auto" :width "50%" :height "20vh"}}
-   [:h2 "Covid-tracker-cljs - Click on the green shape to do things.."]])
+   [:h2 "Covid-tracker-cljs - Click on Pohjois-Karjala to do things.."]])
 
 (defn root []
   [:div

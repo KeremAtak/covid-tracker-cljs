@@ -7,6 +7,16 @@
    (:background-color db)))
 
 (reg-sub
+ ::graphics
+ (fn [db]
+   (:graphics db)))
+
+(reg-sub
+ ::map-dots
+ (fn [db]
+   (:map-dots db)))
+
+(reg-sub
  ::provinces
  (fn [db]
    (:provinces db)))

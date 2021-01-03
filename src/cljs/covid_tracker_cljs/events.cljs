@@ -11,3 +11,13 @@
  ::init-db
  (fn [_ _]
    db/app-db))
+
+(reg-event-db
+ ::set-boundaries
+ (fn [db [_ kwd boundaries]]
+   (assoc-in db [:shapes kwd :boundaries] boundaries)))
+
+(reg-event-db
+ ::set-graphics
+ (fn [db [_ graphics]]
+   (assoc db :graphics graphics)))

@@ -5,32 +5,6 @@
             [quil.middleware :as m]
             [re-frame.core :refer [dispatch subscribe]]))
 
-(defn form-shape! [{:keys [color graphics shape]}]
-  (q/with-graphics graphics
-    (q/background @(subscribe [::subs/background-color]))
-    (q/begin-shape)
-    ;; delete scale here?
-    (q/scale 1)
-    (let [[r g b] color]
-      (q/fill r g b))
-    (doseq [[x y] (:points shape)]
-      (q/vertex x y))
-    (q/end-shape)))
-
-(defn setup [state]
-  ;; Maybe calculate boundaries in this let..
-  (let [pk (q/create-graphics 50 60)
-        cu (q/create-graphics 120 140)
-        shapes @(subscribe [::subs/shapes])]
-    (form-shape! {:color [0 255 0]
-                  :graphics pk
-                  :shape (:pohjois-karjala shapes)})
-    (form-shape! {:color [255 0 0]
-                  :graphics cu
-                  :shape (:cube shapes)})
-    (q/set-state! :pohjois-karjala pk
-                  :cube cu)))
-
 (defn update-bg [state]
   (let [background-color @(subscribe [::subs/background-color])]
     (dispatch [::events/change-background (- background-color 5)])
@@ -44,26 +18,92 @@
       (update-bg state)
       state)))
 
+(defn draw-image [graphic shape]
+  (let [[minima _] (:boundaries shape)]
+    (q/image graphic
+             (:x minima)
+             (:y minima))))
+
 (defn draw [state]
   (let [background-color @(subscribe [::subs/background-color])
+        graphics @(subscribe [::subs/graphics])
         shapes @(subscribe [::subs/shapes])]
     (q/background background-color)
-    (if (or (nil? (:pohjois-karjala state))
-            (nil? (:cube state)))
-      (do
-        (q/text "Loading" 10 10))
-      (do
-        (q/image (:pohjois-karjala state)
-                 (-> shapes :pohjois-karjala :position first)
-                 (-> shapes :pohjois-karjala :position second))
-        (q/image (:cube state)
-                 (-> shapes :cube :position first)
-                 (-> shapes :cube :position second))))))
+    (if (nil? graphics)
+      (q/text "Loading" 10 10)
+      (doseq [[graphic shape] (map list graphics shapes)]
+        (draw-image (second graphic) (second shape))))))
+
+(defn point->extrema
+  "Calculates whether value is more extreme than the other. Highest?-boolean determines
+   if we're looking for minimal or maximal value."
+  [{:keys [extrema maximal? point]}]
+  (cond
+    (and maximal? (< extrema point)) point
+    (and (not maximal?) (< point extrema)) point
+    :else extrema))
+
+(defn map-dots-and-points->boundaries
+  "Calculates the maxima values recursively"
+  [{:keys [map-dots maxima-x maxima-y minima-x minima-y points]}]
+  (if (empty? points)
+    [{:x minima-x :y minima-y}
+     {:x maxima-x :y maxima-y}]
+    (let [point (first points)
+          [x y] (point map-dots)
+          new-maxima-x (point->extrema {:extrema maxima-x
+                                        :maximal? true
+                                        :point x})
+          new-maxima-y (point->extrema {:extrema maxima-y
+                                        :maximal? true
+                                        :point y})
+          new-minima-x (point->extrema {:extrema minima-x
+                                        :maximal? false
+                                        :point x})
+          new-minima-y (point->extrema {:extrema minima-y
+                                        :maximal? false
+                                        :point y})
+          rest-points (rest points)]
+      (map-dots-and-points->boundaries {:map-dots map-dots
+                                        :maxima-x new-maxima-x :maxima-y new-maxima-y
+                                        :minima-x new-minima-x :minima-y new-minima-y
+                                        :points rest-points}))))
+
+(defn form-shape! [shape]
+  (let [background-color @(subscribe [::subs/background-color])
+        map-dots @(subscribe [::subs/map-dots])
+        [shape-keyword shape-data] shape
+        shape-points (:points shape-data)
+        boundaries (map-dots-and-points->boundaries {:map-dots map-dots
+                                                     :maxima-x 0 :maxima-y 0
+                                                     :minima-x 10000 :minima-y 10000
+                                                     :points shape-points})
+        [minima maxima] boundaries
+        graphics (q/create-graphics (- (:x maxima) (:x minima)) (- (:y maxima) (:y minima)))]
+    (q/with-graphics graphics
+      #_(q/background 240)
+      (q/begin-shape)
+    ;; delete scale here?
+      (q/scale 1)
+      (q/fill 255 0 0)
+      (doseq [kwd shape-points]
+        (let [[x y] (kwd map-dots)]
+          (q/vertex (- x (:x minima)) (- y (:y minima)))))
+      (q/end-shape))
+    (dispatch [::events/set-boundaries shape-keyword boundaries])
+    graphics))
+
+(defn setup [state]
+   (let [shapes @(subscribe [::subs/shapes])
+         graphics (map form-shape! shapes)
+         municipality-keywords (keys shapes)]
+     (dispatch [::events/set-graphics (zipmap municipality-keywords graphics)])))
+
 
 (q/defsketch covid-canvas
   :setup setup
   :host "canvas"
-  :size [500 500]
+  :size [800 1200]
   :renderer :p2d
   :draw draw
   :mouse-clicked check-mouse!
