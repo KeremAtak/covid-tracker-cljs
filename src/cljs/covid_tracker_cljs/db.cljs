@@ -12,25 +12,64 @@
     {:province "Uusimaa3" :municipalities ["Helsinki" "Espoo" "Vantaa" "Lohja"]}
     {:province "Uusimaa4" :municipalities ["Helsinki" "Espoo" "Vantaa" "Lohja"]}
     {:province "Uusimaa5" :municipalities ["Helsinki" "Espoo" "Vantaa" "Lohja"]}]
-   :shapes {:ahvenanmaa {:points [:g6 :h6 :i6 :j6 :k6]}
-            :etela-karjala {:points [:d2 :c3 :h3 :i3 :d3 :e3 :f3 :g3 :j2 :i2 :h2 :g2 :c2]}
-            :etela-pohjanmaa {:points [:m5 :i5 :z2 :w2 :v2 :h5 :d5 :e5 :f5 :u5 :t5 :s5 :r5 :q5 :p5 :o5]}
-            :etela-savo {:points [:u1 :t1 :s1 :r1 :a2 :b2 :c2 :g2 :h2 :i2 :j2 :k2 :l2 :m2 :n2 :o2 :v1]}
-            :lappi {:points [:m6 :c :d :e :f :n6 :g :h :i :j :k :l :m :n :o :p :o6]}
-            :kainuu {:points [:r :e1 :f1 :g1 :h1 :i1 :j1 :k1 :l1 :m1 :u :t :s]}
-            :kanta-hame {:points [:u3 :t3 :s3 :z3 :a4 :l4 :m4 :o4 :p4]}
-            :keski-pohjanmaa {:points [:a1 :b1 :z :b3 :z2 :i5 :j5 :k5 :l5]}
-            :keski-suomi {:points [:w :v :z1 :w1 :v1 :o2 :n2 :m2 :p2 :q2 :t2 :u2 :v2 :w2 :z2 :b3 :w]}
-            :kymenlaakso {:points [:l2 :k2 :j2 :g3 :f3 :e3 :j3 :k3 :l3 :m3 :n3 :o3 :q3]}
-            :paijat-hame {:points [:p2 :m2 :l2 :q3 :o3 :n3 :p3 :s3 :t3 :u3 :v3 :w3 :q2]}
-            :pirkanmaa {:points [:h5 :v2 :u2 :t2 :q2 :w3 :v3 :u3 :p4 :o4 :m4 :n4 :v4 :w4 :z4 :a5 :b5 :d5]}
-            :pohjanmaa {:points [:l5 :k5 :j5 :i5 :m5 :o5 :p5 :q5 :r5 :s5 :t5 :u5 :g5 :d6 :c6 :b6 :a6 :z5 :w5]}
-            :pohjois-karjala {:points [:m1 :l1 :k1 :j1 :f2 :e2 :d2 :c2 :b2 :a2 :r1 :q1 :p1 :o1 :n1]}
-            :pohjois-pohjanmaa {:points [:m :l :k :q :r :s :t :u :v :w :b3 :z :b1 :a1 :c1 :d1]}
-            :pohjois-savo {:points [:u :m1 :n1 :o1 :p1 :q1 :r1 :s1 :t1 :u1 :v1 :w1 :z1 :v]}
-            :satakunta {:points [:d5 :b5 :a5 :z4 :w4 :v4 :u4 :t4 :f6 :e6 :g5 :u5 :f5 :e5]}
-            :uusimaa {:points [:s3 :p3 :n3 :m3 :l3 :i4 :h4 :g4 :e4 :d4 :c4 :b4 :a4 :z3]}
-            :varsinais-suomi {:points [:t4 :u4 :v4 :n4 :m4 :l4 :a4 :b4 :c4 :d4 :q4 :r4 :s4]}}
+   :scale 1
+   :shapes {:ahvenanmaa {:points [:g6 :h6 :i6 :j6 :k6]
+                         :offset [20 200]
+                         :scale 1}
+            :etela-karjala {:points [:d2 :c3 :h3 :i3 :d3 :e3 :f3 :g3 :j2 :i2 :h2 :g2 :c2]
+                            :offset [130 165]
+                            :scale 1}
+            :etela-pohjanmaa {:points [:m5 :i5 :z2 :w2 :v2 :h5 :d5 :e5 :f5 :u5 :t5 :s5 :r5 :q5 :p5 :o5]
+                              :offset [58 140]
+                              :scale 1}
+            :etela-savo {:points [:u1 :t1 :s1 :r1 :a2 :b2 :c2 :g2 :h2 :i2 :j2 :k2 :l2 :m2 :n2 :o2 :v1]
+                         :offset [100 110]
+                         :scale 1}
+            :lappi {:points [:m6 :c :d :e :f :n6 :g :h :i :j :k :l :m :n :o :p :o6]
+                    :offset [100 0]
+                    :scale 1}
+            :kainuu {:points [:r :e1 :f1 :g1 :h1 :i1 :j1 :k1 :l1 :m1 :u :t :s]
+                     :offset [100 27]
+                     :scale 1}
+            :kanta-hame {:points [:u3 :t3 :s3 :z3 :a4 :l4 :m4 :o4 :p4]
+                         :offset [40 210]
+                         :scale 1}
+            :keski-pohjanmaa {:points [:a1 :b1 :z :b3 :z2 :i5 :j5 :k5 :l5]
+                              :offset [50 110]
+                              :scale 1}
+            :keski-suomi {:points [:w :v :z1 :w1 :v1 :o2 :n2 :m2 :p2 :q2 :t2 :u2 :v2 :w2 :z2 :b3 :w]
+                          :offset [80 160]
+                          :scale 1}
+            :kymenlaakso {:points [:l2 :k2 :j2 :g3 :f3 :e3 :j3 :k3 :l3 :m3 :n3 :o3 :q3]
+                          :offset [90 160]
+                          :scale 1}
+            :paijat-hame {:points [:p2 :m2 :l2 :q3 :o3 :n3 :p3 :s3 :t3 :u3 :v3 :w3 :q2]
+                          :offset [60 190]
+                          :scale 1}
+            :pirkanmaa {:points [:h5 :v2 :u2 :t2 :q2 :w3 :v3 :u3 :p4 :o4 :m4 :n4 :v4 :w4 :z4 :a5 :b5 :d5]
+                        :offset [30 180]
+                        :scale 1}
+            :pohjanmaa {:points [:l5 :k5 :j5 :i5 :m5 :o5 :p5 :q5 :r5 :s5 :t5 :u5 :g5 :d6 :c6 :b6 :a6 :z5 :w5]
+                        :offset [-15 125]
+                        :scale 1}
+           :pohjois-karjala {:points [:m1 :l1 :k1 :j1 :f2 :e2 :d2 :c2 :b2 :a2 :r1 :q1 :p1 :o1 :n1]
+                              :offset [150 50]
+                              :scale 1}
+            :pohjois-pohjanmaa {:points [:m :l :k :q :r :s :t :u :v :w :b3 :z :b1 :a1 :c1 :d1]
+                                :offset [0 60]
+                                :scale 1}
+            :pohjois-savo {:points [:u :m1 :n1 :o1 :p1 :q1 :r1 :s1 :t1 :u1 :v1 :w1 :z1 :v]
+                           :offset [120 60]
+                           :scale 1}
+            :satakunta {:points [:d5 :b5 :a5 :z4 :w4 :v4 :u4 :t4 :f6 :e6 :g5 :u5 :f5 :e5]
+                         :offset [10 150]
+                         :scale 1}
+            :uusimaa {:points [:s3 :p3 :n3 :m3 :l3 :i4 :h4 :g4 :e4 :d4 :c4 :b4 :a4 :z3]
+                      :offset [55 230]
+                      :scale 1}
+            :varsinais-suomi {:points [:t4 :u4 :v4 :n4 :m4 :l4 :a4 :b4 :c4 :d4 :q4 :r4 :s4]
+                              :offset [10 200]
+                              :scale 1}}
    :map-dots {:a [0 670] :b [400 670] :c [117 46] :d [155 89] :e [198 96] :f [238 11] :g [298 33]
               :h [285 104] :i [322 158] :j [298 205] :k [312 232] :l [267 276] :m [195 289] :n [172 273]
               :o [172 214] :p [163 154] :q [332 279] :r [321 296] :s [257 324] :t [259 361] :u [243 391]

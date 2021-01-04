@@ -21,3 +21,8 @@
  ::set-graphics
  (fn [db [_ graphics]]
    (assoc db :graphics graphics)))
+
+(reg-event-db
+ ::set-scale
+ (fn [db [_ kwd scale]]
+   (assoc-in db [:shapes kwd :scale] scale)))
