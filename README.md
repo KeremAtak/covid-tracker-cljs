@@ -1,10 +1,10 @@
 # covid-tracker-cljs
 
-This application will eventually visualize covid-related data. Currently it doesn't do much and the data is hardcoded, but it eventually should look impressive and present real data from THL.
+This application will eventually visualize covid-related data.
 
-Some Quil graphics have been implemented.
+Admin-ui -stylish graphics have been implemented, fetches hardcoded data from local re-frame app-db.
 
-This application is written with ClojureScript and it's library re-frame.
+This application is written with ClojureScript and its libraries Quil and Re-Frame.
 
 # Installation instructions
 

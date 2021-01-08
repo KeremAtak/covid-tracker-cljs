@@ -23,6 +23,11 @@
    (assoc db :graphics graphics)))
 
 (reg-event-db
+ ::set-province-to-display
+ (fn [db [_ province-to-display]]
+   (assoc db :province-to-display province-to-display)))
+
+(reg-event-db
  ::set-scale
  (fn [db [_ kwd scale]]
    (assoc-in db [:shapes kwd :scale] scale)))

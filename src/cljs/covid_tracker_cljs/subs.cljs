@@ -17,9 +17,9 @@
    (:map-dots db)))
 
 (reg-sub
- ::provinces
+ ::province-to-display
  (fn [db]
-   (:provinces db)))
+   (:province-to-display db)))
 
 (reg-sub
  ::shapes

@@ -7,7 +7,8 @@
 
 (defn dispatch-if-different-value! [{:keys [scale-current scale-new shape-kwd]}]
   (when (not= scale-current scale-new)
-    (dispatch [::events/set-scale shape-kwd scale-new])))
+    (dispatch [::events/set-scale shape-kwd scale-new])
+    (dispatch [::events/set-province-to-display shape-kwd])))
 
 (defn mouse-within-boundaries? [[minima maxima]]
   (and (< (:x minima) (q/mouse-x) (:x maxima))
