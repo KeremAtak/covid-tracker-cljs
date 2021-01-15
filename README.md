@@ -1,8 +1,8 @@
 # covid-tracker-cljs
 
-This application will eventually visualize covid-related data.
+This application visualises COVID-related data in Finland.
 
-Admin-ui -stylish graphics have been implemented, fetches hardcoded data from local re-frame app-db.
+Admin-ui -stylish graphics have been implemented, the data is fetched from project's backend.
 
 This application is written with ClojureScript and its libraries Quil and Re-Frame.
 
@@ -16,4 +16,4 @@ For tests install karma-cli globally with `npm install -g karma-cli`. After that
 
 # Links
 
-Project's backend (currently not used): https://github.com/KeremAtak/covid-tracker-clj
+Project's backend: https://github.com/KeremAtak/covid-tracker-clj

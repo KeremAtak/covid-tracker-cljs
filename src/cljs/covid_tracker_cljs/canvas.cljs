@@ -38,10 +38,9 @@
     (q/scale (/ 1 scale))))
 
 (defn draw [_]
-  (let [background-color @(subscribe [::subs/background-color])
-        graphics @(subscribe [::subs/graphics])
+  (let [graphics @(subscribe [::subs/graphics])
         shapes @(subscribe [::subs/shapes])]
-    (q/background background-color)
+    (q/background 255)
     (if (nil? graphics)
       (q/text "Loading" 10 10)
       (doseq [[graphic shape] (map list graphics shapes)]

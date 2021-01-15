@@ -8,21 +8,22 @@
   [[shape-kwd shape-values]]
   (let [shape-name (name shape-kwd)
         statistics (:statistics shape-values)
-        {:keys [deaths infections]} statistics]
+        infections (:infections statistics)]
     [:div {:style {:padding 10}}
      [:h3 shape-name]
-     [:p "Sairastuneet: " infections]
-     [:p "Kuolleet: " deaths]]))
+     [:p "Sairastuneet: " infections]]))
 
 (defn municipalities
-  "Displays municiplaities of one province"
+  "Displays municipalities of one province"
   [provinces]
   (let [province-to-display @(subscribe [::subs/province-to-display])]
     (if (not (nil? province-to-display))
       (let [province (province-to-display provinces)
+            infections (->> province :statistics :infections)
             municipalities (:municipalities province)]
         [:div
          [:h3 (name province-to-display)]
+         [:p "Sairastuneet: " infections]
          [:div {:style {:display "flex" :flex-wrap "wrap"}}
          (map display-shape municipalities)]])
       [:p "Siirrä hiiri maakunnan yläpuolelle!"])))
@@ -30,12 +31,18 @@
 (defn infographics []
   [:div
    {:style {:margin 10 :width "50vw" :height "100vh"}}
-   [:h2 "Maakuntien tilanne: "]
-   (let [shapes @(subscribe [::subs/shapes])]
+   (let [shapes @(subscribe [::subs/shapes])
+         {:keys [deaths infections]} (->> shapes :Kaikki :statistics)]
      [:div
-      [:div
-       (municipalities shapes)]
+      [:h2 "Koronatilastot koko maassa"]
+      [:p "Sairastuneet: " infections]
+      [:p "Kuolleet: " deaths]
+      [:h2 "Maakuntien tilanne: "]
       [:div {:style {:display "flex" :flex-wrap "wrap"}}
+       [:div
+        (municipalities shapes)]
+       [:div
+        [:h2 "Kaikki maakunnat"]]
        (map display-shape shapes)]])])
 
 (defn header []

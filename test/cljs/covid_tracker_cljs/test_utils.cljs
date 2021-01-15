@@ -8,7 +8,6 @@
   [{:keys [element string]}]
   (string/includes? (hiccup-text element) string))
 
-
 (deftest test-utils-test
   (let [element [:div
                  [:p "One"]

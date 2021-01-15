@@ -15,8 +15,6 @@
         header (views/header)]
     (testing "Province name appears on list"
       (is (hiccup-found? {:element shape-displayed :string "Uusimaa"})))
-    (testing "Kuolleet appears"
-      (is (hiccup-found? {:element shape-displayed :string "Kuolleet"})))
     (testing "Death count appears"
       (is (hiccup-found? {:element shape-displayed :string 12})))
     (testing "Header appears"

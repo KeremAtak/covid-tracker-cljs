@@ -4,6 +4,8 @@
                   :exclusions [com.google.javascript/closure-compiler-unshaded
                                org.clojure/google-closure-library
                                org.clojure/google-closure-library-third-party]]
+                 [cljs-ajax "0.8.1"]
+                 [day8.re-frame/http-fx "0.2.2"]
                  [hiccup-find "1.0.0"]
                  [quil "3.0.0"]
                  [reagent "0.10.0"]

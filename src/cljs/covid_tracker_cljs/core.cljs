@@ -3,19 +3,20 @@
             [covid-tracker-cljs.events :as events]
             [covid-tracker-cljs.views :as views]
             [reagent.dom :as rdom]
-            [re-frame.core :as re-frame]))
+            [re-frame.core :refer [dispatch dispatch-sync clear-subscription-cache!]]))
 
 (defn dev-setup []
   (when config/debug?
     (println "dev mode")))
 
 (defn ^:dev/after-load mount-root []
-  (re-frame/clear-subscription-cache!)
+  (clear-subscription-cache!)
   (let [root-el (.getElementById js/document "root")]
     (rdom/unmount-component-at-node root-el)
     (rdom/render [views/root] root-el)))
 
 (defn init []
-  (re-frame/dispatch-sync [::events/init-db])
+  (dispatch-sync [::events/init-db])
+  (dispatch [::events/get-backend-statistics])
   (dev-setup)
   (mount-root))
