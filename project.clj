@@ -5,13 +5,16 @@
                                org.clojure/google-closure-library
                                org.clojure/google-closure-library-third-party]]
                  [cljs-ajax "0.8.1"]
+                 [compojure "1.6.2"]
                  [day8.re-frame/http-fx "0.2.2"]
                  [hiccup-find "1.0.0"]
                  [quil "3.0.0"]
                  [reagent "0.10.0"]
                  [re-com "2.9.0"]
                  [re-frame "1.1.2"]
-                 [thheller/shadow-cljs "2.11.7"]]
+                 [ring "1.8.2"]
+                 [thheller/shadow-cljs "2.11.7"]
+                 [yogthos/config "1.1.7"]]
 
   :plugins [[lein-shadow "0.3.1"]
             [lein-shell "0.5.0"]]
@@ -32,7 +35,8 @@
                                :asset-path "/js/compiled"
                                :modules {:app {:init-fn covid-tracker-cljs.core/init
                                                :preloads [devtools.preload]}}
-
+                               :dev {:closure-defines
+                                     {covid-tracker-cljs.events/BACKEND_URL "http://localhost:3000/api/thl/infections/all"}}
                                :devtools {:http-root "resources/public"
                                           :http-port 8280}}
                          :browser-test
@@ -83,6 +87,12 @@
    {:dependencies [[binaryage/devtools "1.0.2"]]
     :source-paths ["dev"]}
 
-   :prod {}}
+   :prod {}
+   :uberjar {:source-paths ["env/prod/clj"]
+             :omit-source  true
+             :main         covid-tracker-cljs.server
+             :aot          [covid-tracker-cljs.server]
+             :uberjar-name "covid-tracker-cljs.jar"
+             :prep-tasks   ["compile" ["release"]]}}
 
   :prep-tasks [])

@@ -1,11 +1,7 @@
 (ns covid-tracker-cljs.subs
   (:require [re-frame.core :refer [reg-sub]]))
 
-(reg-sub
- ::background-color
- (fn [db]
-   (:background-color db)))
-
+;; used purely for development
 (reg-sub
  ::db
  (fn [db]
@@ -30,16 +26,6 @@
  ::shapes
  (fn [db]
    (:shapes db)))
-
-(reg-sub
- ::success-http-result
- (fn [db]
-   (:success-http-result db)))
-
-(reg-sub
- ::failure-http-result
- (fn [db]
-   (:failure-http-result db)))
 
 (reg-sub
  ::loading?

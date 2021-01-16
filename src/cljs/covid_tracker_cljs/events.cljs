@@ -5,6 +5,9 @@
             [day8.re-frame.http-fx]
             [re-frame.core :refer [reg-event-db reg-event-fx]]))
 
+;; this is redefined in compiler options when in dev mode
+(goog-define BACKEND_URL "https://covid-tracker-clj.herokuapp.com/api/thl/infections/all")
+
 (reg-event-db
  ::bad-response
  (fn [db [_ result]]
@@ -15,7 +18,7 @@
  ::get-backend-statistics
  (fn [{db :db} _]
    {:http-xhrio {:method          :get
-                 :uri             "http://localhost:3000/api/thl/infections/all"
+                 :uri             BACKEND_URL
                  :format          (ajax/json-request-format)
                  :response-format (ajax/json-response-format)
                  :on-success      [::process-response]
@@ -35,7 +38,7 @@
 (reg-event-db
  ::process-response
  (fn [db [_ result]]
-   (deep-merge db (keywordize-keys result))))
+   (assoc (deep-merge db (keywordize-keys result)) :loading? false)))
 
 (reg-event-db
  ::set-boundaries

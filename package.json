@@ -1,5 +1,9 @@
 {
 	"name": "covid-tracker-cljs",
+	"main": "target/js/covid-tracker-cljs.js",
+	"engines": {
+		"node": "14.x"
+	},
 	"dependencies": {
 		"p5": "^1.2.0",
 		"react": "16.13.0",

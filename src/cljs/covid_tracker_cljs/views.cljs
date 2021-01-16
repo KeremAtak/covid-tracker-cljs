@@ -48,7 +48,11 @@
 (defn header []
   [:header
    {:style {:margin "auto" :width "50%" :height "20vh"}}
-   [:h2 "Covid-tracker-cljs - Drag over objects to do things.."]])
+   [:h2 "Covid-tracker-cljs - tuo hiiri maakunnan yli näyttääksesi lisää tilastoja."]
+   (let [loading? @(subscribe [::subs/loading?])]
+     (when loading?
+        [:a {:href "https://github.com/KeremAtak/covid-tracker-cljs/"}
+         "Eikö tilastot lataudu? Lue README:"]))])
 
 (defn root []
   [:div
